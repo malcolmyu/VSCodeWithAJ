@@ -1,4 +1,4 @@
-interface Item {
+export interface Item {
     title: string;
     subtitle: string;
     valid: boolean;
@@ -12,12 +12,14 @@ interface Item {
     text?: string;
 }
 
-class Workflow {
-    constructor(
-        private readonly results: Item[],
-    ) {}
+export class Workflow {
+    private readonly results: Item[] = [];
+
+    addItem(item: Item) {
+        this.results.push(item);
+    }
 
     output() {
-        return this.results;
+        return JSON.stringify({ items: this.results });
     }
 }

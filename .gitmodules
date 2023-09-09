@@ -1,3 +1,6 @@
 [submodule "types/quickjs"]
 	path = types/quickjs
 	url = git@github.com:mgred/quickjs-types.git
+[submodule "autojump"]
+	path = autojump
+	url = https://github.com/wting/autojump.git

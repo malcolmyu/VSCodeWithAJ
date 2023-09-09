@@ -1,17 +1,17 @@
-import * as os from 'os';
+import { Item } from "./workflow";
 
-function exec(commands: string[]): string {
-    const [readOut, stdout] = os.pipe()!;
-    const [readErr, stderr] = os.pipe()!;
-    os.exec(commands, { stdout, stderr });
-    const output = readOut.readAsString();
-    const error = readErr.readAsString();
+// FIXME: 想办法把 exec 封装到这里
+export function getAutoJumpPath(query: string[]): Item[] {
+    return query.map((item) => {
+        const last = item.match(/\/([^/]+)$/);
+        const title = last ? last[1] : item;
+        const subtitle = item.replace(/^.+?__[1-9]__/, '');
 
-    return output ?? error;
-}
-
-export function getAutoJumpPath(query: string) {
-    const directories: string = exec([`./runtime/autojump --completion ${query}`]);
-    console.log(directories);
-    // const candidates = directories.split('\n');
+        return {
+            title,
+            subtitle,
+            arg: subtitle,
+            valid: true,
+        };
+    });
 }
